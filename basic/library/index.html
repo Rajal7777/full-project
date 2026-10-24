@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=ZCOOL+KuaiLe&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="grid-container">
+      <header>
+        <p>My library</p>
+      </header>
+      <button class="new-book-btn">new book</button>
+
+      <form action="" id="book-form" class="hidden">
+        <label for="title">title</label>
+        <input type="text" id="title" name="title" />
+
+        <label for="author">author</label>
+        <input type="text" id="author" name="title" />
+
+        <label for="pages">pages</label>
+        <input type="text" id="pages" name="pages" />
+
+        <label for="isRead">isRead</label>
+        <input type="checkbox" id="isRead" name="isRead" />
+
+        <button type="submit" class="new-book-submit-btn">Submit</button>
+      </form>
+      <ul class="book-cards"></ul>
+    </div>
+  </body>
+</html>
