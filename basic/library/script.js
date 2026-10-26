@@ -1,11 +1,10 @@
-//main array to store book
+// Global array to store books
 const myLibrary = [];
 
 function Book(title, author, pages, isRead) {
   if (!new.target) {
     throw Error("Use the new key");
   }
-
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
@@ -13,86 +12,80 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
+// Cleaned up with a ternary operator
 Book.prototype.hasRead = function () {
-  if (!this.isRead) {
-    return "Not read yet";
-  } else {
-    return "Already read";
-  }
+  return this.isRead ? "Already read" : "Not read yet";
 };
 
-//fun to add a new book to myLibrary
 function addBookToLibrary(title, author, pages, isRead) {
-  let newBook = new Book(title, author, pages, isRead);
+  const newBook = new Book(title, author, pages, isRead);
   myLibrary.push(newBook);
 }
 
 const listBooks = document.querySelector("ul");
 
-//clear the book
 function clearBooks() {
   listBooks.innerHTML = "";
 }
 
-//test adding book
-addBookToLibrary("Altra Learining", "Scout young", "356", false);
+// Test book
+addBookToLibrary("Ultra Learning", "Scott Young", "356", false);
 
-//show the books in ui
-function showBooks(myLibrary) {
+// Removed the redundant myLibrary parameter since it's global
+function showBooks() {
+  // FIXED: Always clear old HTML at the very start of rendering
+  clearBooks();
+
+  // Native 'index' used directly, removing the need for findIndex()
   myLibrary.forEach((book, index) => {
     const bookLi = document.createElement("li");
-    const removeBtn = document.createElement("button");
-    const readToggleBtn = document.createElement("button");
-    const readStatus = document.createElement("p");
+    const titleH3 = document.createElement("h3"); // Cleaner than loose textContent
     const author = document.createElement("p");
     const pages = document.createElement("p");
+    const readStatus = document.createElement("p");
+    const readToggleBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
 
-    //add class
-    readStatus.textContent = `Read Status: ${book.hasRead()}`;
-    bookLi.classList = "book-card";
-    readToggleBtn.classList = "readToggleBtn";
-    readToggleBtn.textContent = "Read/Not Read";
+    bookLi.classList.add("book-card");
+    readToggleBtn.classList.add("readToggleBtn");
 
-    //select the class and insert the text for each input by user
-    //alter the text on the li tag to display on the web page
-    bookLi.textContent = `${book.title}`;
+    titleH3.textContent = book.title;
     author.textContent = `Author: ${book.author}`;
     pages.textContent = `Pages: ${book.pages}`;
+    readStatus.textContent = `Read Status: ${book.hasRead()}`;
+    readToggleBtn.textContent = "Read/Not Read";
     removeBtn.textContent = "Remove";
-    removeBtn.id = book.id;
 
-    //find the index of the book to be remove and use splice and remove 1 item from that index and push back
-    removeBtn.addEventListener("click", (event) => {
-      const index = myLibrary.findIndex((book) => book.id === removeBtn.id);
+    // REDUNDANCY FIXED: Uses the native loop index directly
+    removeBtn.addEventListener("click", () => {
       myLibrary.splice(index, 1);
-      showBooks(myLibrary);
+      showBooks();
     });
 
+    // REDUNDANCY FIXED: Uses direct boolean inversion
     readToggleBtn.addEventListener("click", () => {
-      if (book.isRead) {
-        book.isRead = false;
-        readStatus.textContent = `Read Status: ${book.hasRead()}`;
-      } else {
-        book.isRead = true;
-        readStatus.textContent = `Read Status: ${book.hasRead()}`;
-      }
+      book.isRead = !book.isRead;
+      readStatus.textContent = `Read Status: ${book.hasRead()}`;
     });
 
-    //append the book onto ul.
-    listBooks.appendChild(bookLi);
+    // Clean structural appending
+    bookLi.appendChild(titleH3);
     bookLi.appendChild(author);
     bookLi.appendChild(pages);
     bookLi.appendChild(readStatus);
     bookLi.appendChild(readToggleBtn);
     bookLi.appendChild(removeBtn);
+    listBooks.appendChild(bookLi);
   });
 }
 
-showBooks(myLibrary);
+// Initial render
+showBooks();
 
-//select the btn to add and select form
+// Form selectors
 const newBookBtn = document.querySelector(".new-book-btn");
 const bookForm = document.querySelector("#book-form");
+const submitBook = document.querySelector(".new-book-submit-btn");
 
 function toggleDisplay() {
   bookForm.classList.toggle("hidden");
@@ -101,32 +94,22 @@ function toggleDisplay() {
 
 newBookBtn.addEventListener("click", toggleDisplay);
 
-const submitBook = document.querySelector(".new-book-submit-btn");
-
-//add e to the submit btn in form
 submitBook.addEventListener("click", (event) => {
-  //to prevent the defualt form submission to a server
   event.preventDefault();
-  console.log("submit button clicked");
-  console.log(myLibrary);
 
-  //get the form item
   const title = document.querySelector("#title");
   const author = document.querySelector("#author");
   const pages = document.querySelector("#pages");
   const isRead = document.querySelector("#isRead");
 
-  //add to  the array of books
   addBookToLibrary(title.value, author.value, pages.value, isRead.checked);
 
-  //To Clear form after submitting new book
+  // Clear inputs
   title.value = "";
   author.value = "";
   pages.value = "";
   isRead.checked = false;
 
-  //Clear the old list
-  clearBooks();
-
-  showBooks(myLibrary);
+  // Re-render updated state
+  showBooks();
 });
