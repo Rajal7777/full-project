@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f5f0;
+  color: #333;
+}
+
+header {
+  background-color: #5b3424;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+nav button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #5b3424;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background-color: #e8d7c5;
+}
+
+#context {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.menu-card h2 {
+  color: #5b3424;
+}
+
+.menu-card p {
+  line-height: 1.6;
+}
+
+.active {
+  background-color: #5b3424;
+  color: white;
+}
