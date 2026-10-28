@@ -19,10 +19,10 @@ const buttons = [homeButton, menuButton, contactButton];
 function activePage(page, btnparam) {
   content.innerHTML = "";
 
-  buttons.forEach((btn) =>
-    btn === btnparam
-      ? btn.classList.add("active")
-      : btn.classList.remove("active"),
+  buttons.forEach(
+    (btn) => btn === btnparam && btn.classList.toggle("active"),
+    //   ? btn.classList.add("active")
+    //   : btn.classList.remove("active"),
   );
   page();
   //   setActiveButton(btn);
